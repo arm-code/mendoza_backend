@@ -6,6 +6,11 @@ from rest_framework.documentation import include_docs_urls
 router = routers.DefaultRouter()
 router.register('forniture', views.MobiliarioView, 'forniture')
 router.register('products', views.ProductView, 'products')
+router.register('clients', views.ClientView, 'clients')
+router.register('address', views.AddressView, 'addresss')
+router.register('cart', views.ShoppingCartView, 'cart')
+router.register('purchase-order', views.PurchaseOrderView, 'purchase-order')
+router.register('detailed-order', views.DetailedOrderView, 'detailed-order')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),
