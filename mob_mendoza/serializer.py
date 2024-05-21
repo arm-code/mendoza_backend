@@ -27,19 +27,17 @@ class CartItemSerializer(serializers.ModelSerializer):
         model = CartItem
         fields = '__all__'
 
-class ShoppingCartSerializer(serializers.ModelSerializer):
-    items = CartItemSerializer(many=True)
-
+class ShoppingCartSerializer(serializers.ModelSerializer):    
     class Meta:
         model = ShoppingCart
-        fields = ['id', 'client', 'created_at', 'items']
+        fields = ['id', 'client', 'created_at']
 
 class DetailedOrderSerializer(serializers.ModelSerializer):
     product = ProductSerializer()
 
     class Meta:
         model = DetailedOrder
-        fields = ['id', 'product', 'quantity', 'cost']
+        fields = ['id','order', 'product', 'quantity', 'cost']
 
 class PurchaseOrderSerializer(serializers.ModelSerializer):
     details = DetailedOrderSerializer(many=True)
@@ -53,7 +51,7 @@ class OrderCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = PurchaseOrder
-        fields = ['customer', 'details']
+        fields = ['client', 'details']
 
     def create(self, validated_data):
         details_data = validated_data.pop('details')
