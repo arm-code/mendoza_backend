@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from rest_framework import viewsets
-from .serializer import FornitureSerializer, ProductSerializer, ClientSerializer, AddressSerializer, ShoppingCartSerializer, PurchaseOrderSerializer, DetailedOrderSerializer
-from .models import Forniture, Product, Client, Address, ShoppingCart, PurchaseOrder, DetailedOrder
+from .serializer import FornitureSerializer, ProductSerializer, ClientSerializer, AddressSerializer, ShoppingCartSerializer, PurchaseOrderSerializer, DetailedOrderSerializer, CartItemSerializer, OrderCreateSerializer
+from .models import Forniture, Product, Client, Address, ShoppingCart, PurchaseOrder, DetailedOrder, CartItem
 
 # Create your views here.
 class MobiliarioView(viewsets.ModelViewSet):
@@ -23,6 +23,10 @@ class AddressView(viewsets.ModelViewSet):
 class ShoppingCartView(viewsets.ModelViewSet):
     serializer_class = ShoppingCartSerializer
     queryset = ShoppingCart.objects.all()
+
+class CartItemView(viewsets.ModelViewSet):
+    serializer_class = CartItemSerializer
+    queryset = CartItem.objects.all()
 
 class PurchaseOrderView(viewsets.ModelViewSet):
     serializer_class = PurchaseOrderSerializer

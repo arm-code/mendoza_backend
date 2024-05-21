@@ -18,23 +18,22 @@ class Forniture(models.Model):
 
 
 # LOS SIGUIENTES MODELOS SON PARA EL CARRITO DE COMPRAS
-
-class Client(models.Model):
-    name_client = models.CharField(max_length=50, blank=False)
-    last_name_client = models.CharField(max_length=50)
-    phone = models.CharField(max_length=12, blank=False)
-
-    def __str__(self):
-        return self.name_client
-    
-class Address(models.Model):
-    client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=False)
+class Address(models.Model):    
     street = models.CharField(max_length=50, blank=False)
     number = models.IntegerField(blank=False)
     cologne = models.CharField(max_length=50, blank=False)
 
     def __str__(self):
-        return f"{self.street} {self.number} {self.cologne}"
+        return f"{self.street}, {self.number}, {self.cologne}"
+
+class Client(models.Model):
+    name_client = models.CharField(max_length=50, blank=False)
+    last_name_client = models.CharField(max_length=50)
+    phone = models.CharField(max_length=12, blank=False)
+    address = models.ForeignKey(Address, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name_client   
 
 class Product(models.Model):
     product_name = models.CharField(max_length=50, blank=False)
@@ -56,26 +55,36 @@ class FornitureCombos(models.Model):
 
 class ShoppingCart(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=False)
-    product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False)
-    quantity = models.IntegerField(blank=False)    
+    created_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.client
+    
+class CartItem(models.Model):
+    cart = models.ForeignKey(ShoppingCart, related_name='items', on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    quantity =  models.IntegerField()
+    cost = models.DecimalField(max_digits=10, decimal_places=2)
 
 class PurchaseOrder(models.Model):
     client = models.ForeignKey(Client, on_delete=models.CASCADE, blank=False)
-    address = models.ForeignKey(Address, on_delete=models.CASCADE, blank=False)
-    total_cost = models.DecimalField(blank=False, max_digits=5, decimal_places=2)
+    created_at = models.DateTimeField(auto_now_add=True)
     deadline = models.DateField(blank=False, default=None)
-
+    status = models.CharField(max_length=20, choices=[
+        ('pending', 'Pending'),
+        ('paid', 'Paid'),
+        ('shipped', 'Shipped'),
+        ('completed', 'Completed')
+    ])    
+    
     def __str__(self):
-        return f"{self.client} {self.address} {self.total_cost}"
+        return f"{self.client}-{self.address}"
 
 class DetailedOrder(models.Model):
     order = models.ForeignKey(PurchaseOrder, on_delete=models.CASCADE, blank=False)
     product = models.ForeignKey(Product, on_delete=models.CASCADE, blank=False)
     quantity = models.IntegerField(default=1, blank=False)
-    unit_cost = models.DecimalField(max_digits=5, decimal_places=2, blank=False)
+    cost = models.DecimalField(max_digits=10, default=0, decimal_places=2, blank=False)
 
     def __str__(self):
         return self.order
