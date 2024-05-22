@@ -1,9 +1,5 @@
-*.pyc
-__pycache__/
-*.sqlite3
-*.pyo
+__pycache__
+db.sqlite3
+venv
 
-venv/
-logs/
-tmp/
-.vscode/
+
