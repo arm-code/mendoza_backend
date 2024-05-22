@@ -11,6 +11,7 @@ router.register('cart', views.CartView, 'cart')
 router.register('address', views.AddressView, 'address')
 router.register('order', views.OrderView, 'order')
 router.register('order-detailed', views.OrderDetailedView, 'order-datailed')
+router.register('order-check', views.OrderListView, 'order-check')
 
 urlpatterns = [
     path("api/v1/", include(router.urls)),

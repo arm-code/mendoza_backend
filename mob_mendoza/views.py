@@ -31,3 +31,7 @@ class OrderView(viewsets.ModelViewSet):
 class OrderDetailedView(viewsets.ModelViewSet):
     serializer_class = OrderDetailedSerializer
     queryset = OrderDetail.objects.all()
+
+class OrderListView(viewsets.ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializerComplete

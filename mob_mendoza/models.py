@@ -69,6 +69,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
     total = models.DecimalField(max_digits=7, decimal_places=2)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
+    deadline = models.DateTimeField()
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.name}"
