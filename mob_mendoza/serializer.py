@@ -36,10 +36,17 @@ class OrderDetailedSerializer(serializers.ModelSerializer):
         model = OrderDetail
         fields = '__all__'
 
+class OrderDetailedSerializerComplete(serializers.ModelSerializer):
+    product = ProductSerializer()
+    
+    class Meta:
+        model = OrderDetail
+        fields = ['id', 'order', 'product', 'quantity', 'price' ]
+
 class OrderSerializerComplete(serializers.ModelSerializer):
     customer = CustomerSerializer()
     address = AddressSerializer()
-    order_details = OrderDetailedSerializer(many=True, source='orderdetail_set')
+    order_details = OrderDetailedSerializerComplete(many=True, source='orderdetail_set')
 
     class Meta:
         model = Order

@@ -5,6 +5,4 @@ from .models import Forniture, FornitureCategory,FornitureCombos, Product
 admin.site.register(Forniture)
 admin.site.register(FornitureCategory)
 admin.site.register(Product)
-
-
 admin.site.register(FornitureCombos)
