@@ -8,10 +8,6 @@ class MobiliarioView(viewsets.ModelViewSet):
     serializer_class = FornitureSerializer
     queryset = Forniture.objects.all()
 
-class PacksProductsView(viewsets.ModelViewSet):
-    serializer_class = FornitureCombosSerializer
-    queryset = FornitureCombos.objects.all()
-
 class CustomerView(viewsets.ModelViewSet):
     serializer_class = CustomerSerializer
     queryset = Customer.objects.all()
@@ -19,7 +15,11 @@ class CustomerView(viewsets.ModelViewSet):
 class ProductView(viewsets.ModelViewSet):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    
+
+class ComponentView(viewsets.ModelViewSet):
+    serializer_class = ComponentSerializer
+    queryset = Component.objects.all()
+
 class CartView(viewsets.ModelViewSet):
     serializer_class = CartSerializer
     queryset = Cart.objects.all()

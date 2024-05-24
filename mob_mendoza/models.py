@@ -21,16 +21,6 @@ class Forniture(models.Model):
         return f"{self.type_of_forniture}"
 
 
-class FornitureCombos(models.Model):
-    description = models.CharField(max_length=50, blank=False)
-    price = models.DecimalField(max_digits=5, decimal_places=2, default=0, blank=False)
-    chairs_quantity = models.IntegerField()
-    tables_quantity = models.IntegerField()
-    type_of_tables = models.ForeignKey(FornitureCategory, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.description
-
 # LOS SIGUIENTES MODELOS SON PARA EL CARRITO DE COMPRAS
 
 class Customer(models.Model):
@@ -43,10 +33,28 @@ class Customer(models.Model):
 
 class Product(models.Model):
     name = models.CharField(max_length=50)
+    description = models.CharField(max_length=50, default='')
     price = models.DecimalField(max_digits=7, decimal_places=2)
+    type =models.CharField(default='simple', max_length=10, choices=[
+        ('simple', 'simple'),
+        ('pack', 'pack')
+    ])
 
     def __str__(self):
         return self.name
+
+class Component(models.Model):
+    # This class is to work with products that are composed of different products
+
+    # This next line is to define the ID for the product of "pack" type
+    product_pack = models.ForeignKey(Product, related_name='components', on_delete=models.CASCADE)
+    
+    # this next line is to define the ID for the simple product 
+    product_component = models.ForeignKey(Product, related_name='component_of', on_delete=models.CASCADE)
+    quantity = models.IntegerField() 
+
+    class Meta:
+        unique_together = ('product_pack', 'product_component')   
 
 class Cart(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
