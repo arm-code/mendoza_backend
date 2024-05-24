@@ -1,14 +1,9 @@
 from rest_framework import serializers
-from .models import Forniture, Customer, Product, Cart, Address, Order, OrderDetail, FornitureCombos
+from .models import *
 
 class FornitureSerializer(serializers.ModelSerializer):
     class Meta:
         model = Forniture        
-        fields = '__all__'
-
-class FornitureCombosSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = FornitureCombos
         fields = '__all__'
 
 class CustomerSerializer(serializers.ModelSerializer):
@@ -19,6 +14,11 @@ class CustomerSerializer(serializers.ModelSerializer):
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
+        fields = '__all__'
+
+class ComponentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Component
         fields = '__all__'
 
 class CartSerializer(serializers.ModelSerializer):
