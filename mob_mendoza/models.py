@@ -70,6 +70,13 @@ class Order(models.Model):
     total = models.DecimalField(max_digits=7, decimal_places=2)
     address = models.ForeignKey(Address, on_delete=models.CASCADE)
     deadline = models.DateTimeField()
+    status = models.CharField(default='Generada', max_length=20,  choices=[
+        ('Generada', 'generada'),
+        ('Entregada','entregada'),
+        ('Completada', 'completada'),
+        ('Cancelada', 'cancelada'),
+        ('EnProceso', 'enproceso'  )
+    ])
 
     def __str__(self):
         return f"Order {self.id} by {self.customer.name}"
